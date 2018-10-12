@@ -3,9 +3,9 @@
 ## Project Structure
 - frontend
 - backend
-	- backend -- django-admin application
-	- website -- JSON-API for frontend
-	- steambot -- Bot Application
+	- backend - django-admin application
+	- website - JSON-API for frontend
+	- steambot - Bot Application
 
 ## How to start server
 Web server is written on Python 3.7
