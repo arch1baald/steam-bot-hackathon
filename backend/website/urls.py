@@ -17,5 +17,5 @@ from django.conf.urls import url
 from .views import *
 
 urlpatterns = [
-    url(r'^getBotConfig/', get_config),
+    url(r'^getExample/', get_example),
 ]
