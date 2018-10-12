@@ -28,10 +28,12 @@ DEBUG=True
 #### Linux
 `$ direnv allow`
 
+Load packages: `$ pip3 install -r backend/requirements.txt`
+
 #### Windows
 https://helpdeskgeek.com/how-to/create-custom-environment-variables-in-windows/
 
-Load packages: `$ pip3 install -r backend/requirements.txt`
+Load packages `$ pip3 install -r backend\requirements.txt`
 
 ## Run Django Server from project root
 Linux: `$ django-admin runserver`
