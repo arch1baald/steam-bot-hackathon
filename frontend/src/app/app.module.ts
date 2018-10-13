@@ -10,8 +10,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { NewMessageComponent } from './new-message/new-message.component';
 import { SettingsPageComponent } from './settings-page/settings-page.component';
 import { LandingComponent } from './landing/landing.component';
+import {MatCardModule} from '@angular/material/card';
 import {AppRoutes} from './app.routing';
 import { LocationStrategy, HashLocationStrategy} from '@angular/common';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 
 
@@ -25,6 +27,8 @@ import { LocationStrategy, HashLocationStrategy} from '@angular/common';
     LandingComponent
   ],
   imports: [
+    MatToolbarModule,
+    MatCardModule,
     AppRoutes,
     HttpClientModule,
     MatInputModule,

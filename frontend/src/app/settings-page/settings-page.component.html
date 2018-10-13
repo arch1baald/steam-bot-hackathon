@@ -1,3 +1,16 @@
-<p>
-  settings-page works!
-</p>
+<form class="example-form">
+  <mat-form-field class="example-full-width">
+    <input #NameForm matInput placeholder="Bot name" value={{botName}}>
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <input #DiscriptionForm matInput placeholder="Discription" value={{botDiscription}}>
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <input #WelcomeForm matInput placeholder="Welcome message" value={{botWelcome}}>
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <input #RespondForm matInput placeholder="Respond message" value={{botRespond}}>
+  </mat-form-field>
+
+  <button type="button" mat-raised-button color="warn" (click)="sendSettings(NameForm.value, DiscriptionForm.value, RespondForm.value)">Change settings</button>
+</form>

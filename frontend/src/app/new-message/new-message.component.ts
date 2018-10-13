@@ -16,8 +16,8 @@ constructor(private http:HttpClient)
   }
   public sendMessageToSteam(text: string): void
   {
-    this.http.post("https://steambot20181013015404.azurewebsites.net/sendall?messageText="+text,null).subscribe();
+      this.http.post("https://steambot20181013015404.azurewebsites.net/sendall?messageText="+text,null).subscribe();
     
-   // this.http.post("http://127.0.0.1:8000/api/postMessage/",{"Message": text}).subscribe();
+     //this.http.post("https://pivasbot.appspot.com/api/sendToFriends/",{"Message": text, "Id": 1}).subscribe();
   } 
 }
