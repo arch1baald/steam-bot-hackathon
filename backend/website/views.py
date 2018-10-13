@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET
 from django.utils import timezone
 
-import pandas as pd
+# import pandas as pd
 
 from .models import User, Bot, BotFriend, Message, Mailing
 from .utils import send_message_via_steam, update_bot_meta
@@ -112,9 +112,9 @@ def get_settings(request):
     return result
 
 
-def aggregate_messages(messages_queryset):
-    df_messages = pd.DataFrame([msg.to_dict() for msg in messages_queryset])
-    #TODO: id, sent, text
+# def aggregate_messages(messages_queryset):
+#     df_messages = pd.DataFrame([msg.to_dict() for msg in messages_queryset])
+#     #TODO: id, sent, text
 
 
 @require_GET
