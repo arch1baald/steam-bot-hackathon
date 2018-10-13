@@ -78,11 +78,17 @@ def get_dashboard(request):
     link = 'https://steamcommunity.com/id/self_motion/'
     current_friends = 15
     max_friends = 250
+    text = (
+        'Hello My Nigga, Let\'s make some shit: https://www.google.lt/url?sa=i'
+        '&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwjK5Y3H0IPeA'
+        'hVKjywKHRrrBgQQjRx6BAgBEAU&url=https%3A%2F%2Fcoub.com%2Fview%2Fzessikr&psi'
+        'g=AOvVaw1_NaR_ZjqKlnfsaRMf0dMg&ust=1539527376847073'
+    )
     messages = [
-        dict(number=1, sent=12, readed=10, clicked=346, uniqueClicked=2134),
-        dict(number=2, sent=1745, readed=0, clicked=8, uniqueClicked=444),
-        dict(number=3, sent=23, readed=125, clicked=13435, uniqueClicked=5),
-        dict(number=4, sent=66666, readed=54, clicked=0, uniqueClicked=0),
+        dict(number=1, sent=12, readed=10, clicked=346, uniqueClicked=2134, text=text),
+        dict(number=2, sent=1745, readed=0, clicked=8, uniqueClicked=444, text=text),
+        dict(number=3, sent=23, readed=125, clicked=13435, uniqueClicked=5, text=text),
+        dict(number=4, sent=66666, readed=54, clicked=0, uniqueClicked=0, text=text),
     ]
     result = JsonResponse(dict(
         nameBot=name,
