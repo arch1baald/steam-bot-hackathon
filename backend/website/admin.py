@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Bot, Message, BotFriend, User
+from .models import Bot, Message, BotFriend, User, Mailing
 
 
 @admin.register(Bot)
@@ -10,7 +10,7 @@ class BotAdmin(admin.ModelAdmin):
 
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
-    list_display = ('id', 'bot', 'sent_at', 'text')
+    list_display = ('id', 'mailing', 'bot', 'friend', 'sent_at', 'text')
 
 
 @admin.register(BotFriend)
@@ -21,3 +21,8 @@ class BotFriendAdmin(admin.ModelAdmin):
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'steam_id')
+
+
+@admin.register(Mailing)
+class MailingsAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')

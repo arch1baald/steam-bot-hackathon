@@ -5,8 +5,10 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET
 from django.utils import timezone
 
-from .models import User, Bot, BotFriend, Message
-from .utils import send_message_via_steam
+import pandas as pd
+
+from .models import User, Bot, BotFriend, Message, Mailing
+from .utils import send_message_via_steam, update_bot_meta
 
 
 def update_headers(result):
@@ -17,8 +19,7 @@ def update_headers(result):
 
 
 @csrf_exempt
-# TODO: user_name via request
-def send_message_to_all_friends(request, user_name='Dmitry'):
+def send_message_to_all_friends(request):
     data = request.body.decode()
     if not data:
         result = JsonResponse(dict(status='empty'))
@@ -26,27 +27,40 @@ def send_message_to_all_friends(request, user_name='Dmitry'):
         return result
 
     data = json.loads(data)
-    if 'Message' not in data:
-        result = JsonResponse(dict(status='error'))
+    if 'Message' not in data or 'user' not in data:
+        result = JsonResponse(dict(status='error', traceback='Message or user is not defined'))
         update_headers(result)
         return result
 
-    message = data['Message']
+    user_name, message = data.get('user'), data['Message']
+    mailing_name = data.get('mailing')
+    if user_name is None:
+        result = JsonResponse(dict(status='error', traceback='user is not defined'))
+        update_headers(result)
+        return result
 
     user = User.objects.filter(name=user_name)
-    # TODO: unique checks via steam_id
-    user = user[0]
+    if user:
+        user = user[0]
+    else:
+        result = JsonResponse(dict(status='error', traceback='user not found'))
+        update_headers(result)
+        return result
+
     bots = Bot.objects.filter(owner=user)
+    if bots:
+        mailing = Mailing.objects.create(name=mailing_name)
     for bot in bots:
         bot_friends = BotFriend.objects.filter(bot=bot)
         for friend in bot_friends:
-            print(f'SENDING... from={bot}, to={friend}, time={timezone.now()}')
             Message.objects.create(
                 bot=bot,
                 friend=friend,
+                mailing=mailing,
                 text=message,
                 sent_at=timezone.now(),
             )
+            print(f'SENDING... from={bot}, to={friend}, time={timezone.now()}')
             send_message_via_steam(bot.account, bot.password, friend.steam_id, message)
 
     result = JsonResponse(dict(status='ok'))
@@ -65,15 +79,26 @@ def get_example(request):
 
 
 @require_GET
-def get_settings(request, user_name='Dmitry'):
+def get_settings(request):
+    user_name = request.GET.get('user', None)
+    if user_name is None:
+        result = JsonResponse(dict(status='error', traceback='user is not defined'))
+        update_headers(result)
+        return result
+
     user = User.objects.filter(name=user_name)
-    # TODO: unique checks via steam_id
-    user = user[0]
+    if user:
+        user = user[0]
+    else:
+        result = JsonResponse(dict(status='error', traceback='user not found'))
+        update_headers(result)
+        return result
+
     bots = Bot.objects.filter(owner=user)
     if bots:
         bot = bots[0]
     else:
-        result = JsonResponse(dict(status='error'))
+        result = JsonResponse(dict(status='error', traceback='user has no bot'))
         update_headers(result)
         return result
 
@@ -87,18 +112,44 @@ def get_settings(request, user_name='Dmitry'):
     return result
 
 
+def aggregate_messages(messages_queryset):
+    df_messages = pd.DataFrame([msg.to_dict() for msg in messages_queryset])
+    #TODO: id, sent, text
+
+
 @require_GET
 def get_dashboard(request):
-    name = 'Hackathon Steam Bot'
-    link = 'https://steamcommunity.com/id/self_motion/'
-    current_friends = 15
+    user_name = request.GET.get('user', None)
+    if user_name is None:
+        result = JsonResponse(dict(status='error', traceback='user is not defined'))
+        update_headers(result)
+        return result
+
+    user = User.objects.filter(name=user_name)
+    if user:
+        user = user[0]
+    else:
+        result = JsonResponse(dict(status='error', traceback='user not found'))
+        update_headers(result)
+        return result
+
+    bots = Bot.objects.filter(owner=user)
+    if bots:
+        bot = bots[0]
+    else:
+        result = JsonResponse(dict(status='error', traceback='user has no bot'))
+        update_headers(result)
+        return result
+
+    # update_bot_meta(bot.account, bot.password, user)
+
+    name = bot.name
+    link = bot.steam_url
+    current_friends = bot.friends_count
     max_friends = 250
-    text = (
-        'Hello My Nigga, Let\'s make some shit: https://www.google.lt/url?sa=i'
-        '&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwjK5Y3H0IPeA'
-        'hVKjywKHRrrBgQQjRx6BAgBEAU&url=https%3A%2F%2Fcoub.com%2Fview%2Fzessikr&psi'
-        'g=AOvVaw1_NaR_ZjqKlnfsaRMf0dMg&ust=1539527376847073'
-    )
+    messages_queryset = Message.objects.filter(bot=bot)
+
+    text = 'asdgasdg'
     messages = [
         dict(number=1, sent=12, readed=10, clicked=346, uniqueClicked=2134, text=text),
         dict(number=2, sent=1745, readed=0, clicked=8, uniqueClicked=444, text=text),
