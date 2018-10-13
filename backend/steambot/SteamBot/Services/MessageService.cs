@@ -100,7 +100,7 @@ namespace SteamBot.Services
             while (_isRunning && attempts > 0 && !_isMessageSent)
             {
                 // in order for the callbacks to get routed, they need to be handled by the _manager
-                _manager.RunWaitAllCallbacks(TimeSpan.FromSeconds(2));
+                _manager.RunWaitAllCallbacks(TimeSpan.FromSeconds(5));
                 attempts--;
             }
 
