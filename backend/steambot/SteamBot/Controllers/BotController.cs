@@ -33,6 +33,14 @@ namespace SteamBot.Controllers
             return Ok(result);
         }
 
+        [HttpGet("/getbot64Id")]
+        public IActionResult GetBot64Id()
+        {
+            var service = new MessageService();
+            var result = service.GetBot64Id();
+            return Ok(result);
+        }
+
         [HttpPost("/acceptFriendsAndSendMessage")]
         public IActionResult AcceptFriendsRequestsAndSendMessage(string messageText)
         {

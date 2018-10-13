@@ -13,7 +13,8 @@ namespace SteamBot.Services
         AcceptFriends,
         GetInfo,
         GetAllIds,
-        GetFriendInfo
+        GetFriendInfo,
+        GetBot64Id
     }
     public class MessageService
     {
@@ -73,6 +74,14 @@ namespace SteamBot.Services
             _userInfoVm = new UserInfoVm();
             var result = RunClient();
             return _userInfoVm;
+        }
+
+        string _bot64Id;
+        public string GetBot64Id()
+        {
+            _cmd = Command.GetBot64Id;
+            var result = RunClient();
+            return _bot64Id;
         }
 
         private FriendInfoVm _friendInfoVm;
@@ -139,7 +148,7 @@ namespace SteamBot.Services
                 _manager.RunWaitAllCallbacks(TimeSpan.FromSeconds(5));
                 attempts--;
             }
-
+            
             return _isMessageSent;
         }
 
@@ -183,8 +192,12 @@ namespace SteamBot.Services
 
             Console.WriteLine("Successfully logged on!");
 
-            // at this point, we'd be able to perform actions on Steam
-
+            if (_cmd == Command.GetBot64Id)
+            {
+                _bot64Id = _steamClient.SteamID.ConvertToUInt64().ToString();
+                _isMessageSent = true;
+            }
+            // at this point, we'd be able to perform actions on 
             // for this sample we wait for other callbacks to perform logic
         }
 
