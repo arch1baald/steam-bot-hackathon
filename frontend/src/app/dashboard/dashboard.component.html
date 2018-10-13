@@ -1,26 +1,24 @@
-<p *ngIf="currFriends === 1">
+<p *ngIf="nameBot !== none">
   
   <mat-card class="example-card">
   <mat-card-header>
     <div mat-card-avatar class="example-header-image"></div>
-    <mat-card-title>{{ currFriends }}</mat-card-title>
-    <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+    <mat-card-title>{{ nameBot }}</mat-card-title>
+    
+    <mat-card-subtitle>Share this link to your users: </mat-card-subtitle>
+    <mat-card-subtitle><a href={{linkBot}} target="_blank" >{{linkBot}}</a></mat-card-subtitle>
   </mat-card-header>
-  <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
   <mat-card-content>
     <p>
-      The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-      A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-      bred for hunting.
+      Friends: {{currFriends}} / {{maxFriends}}
     </p>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button>LIKE</button>
-    <button mat-button>SHARE</button>
+    <button mat-button>Raise Friends Limit</button>
   </mat-card-actions>
 </mat-card>
 </p>
-<p *ngIf="currFriends !== 1">
+<p *ngIf="nameBot === null">
   
   <mat-card class="example-card">
   <mat-card-header>
@@ -43,11 +41,27 @@
 </mat-card>
 </p>
 
-<mat-card class="message-stats" *ngFor="let match of matches">
+<mat-card class="message-stats" >
   <mat-card-header>
-    <div mat-card-avatar class="example-header-image"></div>
-    <mat-card-title>{{ match.kills }}</mat-card-title>
-    <mat-card-subtitle>{{match.match}}</mat-card-subtitle>
+    <mat-card-title>Messages sent to your users</mat-card-title>
+  </mat-card-header>
+
+</mat-card>
+<mat-card class="message-stats" >
+  <mat-card-header>
+    <mat-card-title><button type="button" [routerLink]="'/newMessage'">Create new message</button></mat-card-title>
+    
+  </mat-card-header>
+
+</mat-card>
+<mat-card class="message-stats" *ngFor="let message of steamMessages">
+  <mat-card-header>
+    <mat-card-title>Steam Message #{{ message.number }}</mat-card-title>
+    <mat-card-subtitle>Messages sent: {{message.sent}}</mat-card-subtitle>
+    <mat-card-subtitle>Messages read: {{message.readed}}</mat-card-subtitle>
+    <mat-card-subtitle>Clicks: {{message.clicked}}</mat-card-subtitle>    
+    <mat-card-subtitle>Unique Clicks: {{message.uniqueClicked}}</mat-card-subtitle>
+    <mat-card-subtitle>Text: {{message.text}}</mat-card-subtitle>
   </mat-card-header>
 
 </mat-card>

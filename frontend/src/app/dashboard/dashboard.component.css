@@ -1,8 +1,13 @@
 .example-card {
-  max-width: 400px;
+  max-width: 600px;
+}
+.message-stats {
+  max-width: 600px;
+  background-color: beige;
+  box-shadow: 3px;
 }
 
 .example-header-image {
-  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-image: url('https://cdn6.aptoide.com/imgs/2/b/7/2b7f9860f0980ff2fdcd28aae13a5c7f_icon.png');
   background-size: cover;
 }

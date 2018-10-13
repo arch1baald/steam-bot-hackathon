@@ -13,17 +13,26 @@ export class DashboardComponent implements OnInit {
   //https://pivasbot.appspot.com/api/getExample/
   ngOnInit() {
     //this.data=
-    this.http.get("https://pivasbot.appspot.com/api/getExample/").subscribe();
-    this.http.get("https://alpha.gosu.ai/offpubg/api/profile/391917310").subscribe((data: any) => {
-        this.currFriends= data.data.profile_stats.all_matches;
-       this.matches=data.data.matches;
+    this.http.get("https://pivasbot.appspot.com/api/getDashboard/").subscribe((data:any)=>{
+      this.nameBot = data.nameBot;
+      this.linkBot = data.linkBot;
+      this.currFriends=data.currFriends;
+      this.maxFriends=data.maxFriends;
+      this.steamMessages=data.steamMessages;
     });
+    //this.http.get("https://alpha.gosu.ai/offpubg/api/profile/391917310").subscribe((data: any) => {
+       // this.currFriends= data.data.profile_stats.all_matches;
+      // this.matches=data.data.matches;
+   // });
     
     
   }
   
-  public matches : Array<any>;
+  public steamMessages : Array<any>;
   public currFriends: number;
+  public maxFriends: number;
+  public nameBot: string;
+  public linkBot: string;
 
 
 }

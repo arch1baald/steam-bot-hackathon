@@ -14,6 +14,9 @@ import {MatCardModule} from '@angular/material/card';
 import {AppRoutes} from './app.routing';
 import { LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { ModalViewComponent } from './modal-view/modal-view.component';
+
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 
@@ -24,9 +27,11 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     DashboardComponent,
     NewMessageComponent,
     SettingsPageComponent,
-    LandingComponent
+    LandingComponent,
+    ModalViewComponent
   ],
   imports: [
+    MatDialogModule,
     MatToolbarModule,
     MatCardModule,
     AppRoutes,
@@ -38,6 +43,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     BrowserAnimationsModule
   ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[ModalViewComponent]
 })
 export class AppModule { }
