@@ -21,12 +21,13 @@ def get_example(request):
 # @require_POST
 def send_message_to_all_friends(request):
     endpoint = "https://steambot20181013015404.azurewebsites.net/sendall?messageText="
-    if request.body is None:
+    response = request.body.decode()
+    if not response:
         result = JsonResponse(dict(status='empty'))
         result['Access-Control-Allow-Origin'] = '*'
         return result
 
-    response = json.loads(request.body.decode())
+    response = json.loads(response)
     if 'Message' not in response or 'Id' not in response:
         result = JsonResponse(dict(status='error'))
         result['Access-Control-Allow-Origin'] = '*'
