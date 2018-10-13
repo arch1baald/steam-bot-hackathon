@@ -11,6 +11,7 @@ import { NewMessageComponent } from './new-message/new-message.component';
 import { SettingsPageComponent } from './settings-page/settings-page.component';
 import { LandingComponent } from './landing/landing.component';
 import {AppRoutes} from './app.routing';
+import { LocationStrategy, HashLocationStrategy} from '@angular/common';
 
 
 
@@ -32,7 +33,7 @@ import {AppRoutes} from './app.routing';
     BrowserModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

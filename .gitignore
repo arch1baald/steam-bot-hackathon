@@ -108,8 +108,9 @@ venv.bak/
 *.direnv/
 .direnv/*
 
-frontend/node_modules
-frontend/.firebase
-backend/steambot
-backend/steambot/SteamBot/bin
+frontend/node_modules/
+backend/steambot/SteamBot/SteamBot/bin/
+backend/steambot/SteamBot/SteamBot/obj/
+frontend/.firebase/
+backend/steambot/.vs/
 
