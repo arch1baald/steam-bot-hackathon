@@ -182,6 +182,20 @@ namespace SteamBot.Services
 
             // at this point, we can go online on friends, so lets do that
             _steamFriends.SetPersonaState(EPersonaState.Online);
+            if (_cmd == Command.GetInfo)
+            {
+                _userInfoVm.botName = _steamFriends.GetPersonaName();
+                _userInfoVm.botStatus = _steamFriends.GetPersonaState().ToString();
+                _userInfoVm.friendsCount = _steamFriends.GetFriendCount();
+                _userInfoVm.country = callback.Country;
+                _userInfoVm.facebookName = callback.FacebookName;
+                _userInfoVm.flags = callback.AccountFlags.ToString();
+                _userInfoVm.countAuthComputers = callback.CountAuthedComputers.ToString();
+                _userInfoVm.state = _steamFriends.GetPersonaState().ToString();
+                _userInfoVm.steamId = _steamUser.SteamID.ToString();
+                _userInfoVm.profileUrl = "https://steamcommunity.com/profiles/" + _steamUser.SteamID.ConvertToUInt64().ToString();
+                _isMessageSent = true;
+            }
         }
 
         void OnFriendsList(SteamFriends.FriendsListCallback callback)
@@ -202,7 +216,7 @@ namespace SteamBot.Services
                 if (_cmd == Command.SendAll)
                 {
                     _steamFriends.SendChatMessage(steamIdFriend, EChatEntryType.ChatMsg, _messageText);
-                    Thread.Sleep(1000);
+                    Thread.Sleep(500);
                 }
                 else if (_cmd == Command.SendSingle)
                 {
@@ -234,13 +248,6 @@ namespace SteamBot.Services
                     }
                     _isMessageSent = true;
                 }
-            }
-            if (_cmd == Command.GetInfo)
-            {
-                _userInfoVm.botName = _steamFriends.GetPersonaName();
-                _userInfoVm.botStatus = _steamFriends.GetPersonaState().ToString();
-                _userInfoVm.friendsCount = friendCount;
-                _isMessageSent = true;
             }
             if (_cmd == Command.SendAll)
             {
