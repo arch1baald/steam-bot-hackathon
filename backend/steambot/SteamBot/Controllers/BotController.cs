@@ -40,5 +40,20 @@ namespace SteamBot.Controllers
             var userInfo = service.GetBotInfo();
             return Ok(userInfo);
         }
+
+        ReceiveMessageService receiver = new ReceiveMessageService();
+        [HttpPost("/runmessagesreceiver")]
+        public IActionResult RunMessagesReceiver()
+        {
+            receiver.Start();
+            return Ok();
+        }
+
+        [HttpPost("/stopmessagesreceiver")]
+        public IActionResult StopMessagesReceiver()
+        {
+            receiver.Stop();
+            return Ok();
+        }
     }
 }
