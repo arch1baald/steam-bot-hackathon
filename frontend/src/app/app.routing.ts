@@ -6,7 +6,7 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 import {SettingsPageComponent} from './settings-page/settings-page.component';
 export const AppRoutes = RouterModule.forRoot([
   { path: '', component: LandingComponent },
-  { path: 'newMessage', component: NewMessageComponent, canActivate:[] },
-  { path: 'dashboard', component: DashboardComponent, canActivate:[]  },
-  { path: 'settings', component: SettingsPageComponent, canActivate:[]  }
+  { path: 'newMessage', component: NewMessageComponent},
+  { path: 'dashboard', component: DashboardComponent},
+  { path: 'settings', component: SettingsPageComponent}
 ]);

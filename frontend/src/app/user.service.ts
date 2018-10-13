@@ -11,8 +11,8 @@ export class UserService {
   {
       localStorage.setItem('USER_ID', val)
   }
-  getUserId()
+  getUserId():string
   {
-    localStorage.getItem('USER_ID')
+    return localStorage.getItem('USER_ID')
   }
 }

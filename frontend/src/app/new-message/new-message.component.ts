@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {ModalViewComponent} from '../modal-view/modal-view.component';
-import {Router} from '@angular/router'
-import { UserService } from '../user.service'
+import {Router} from '@angular/router';
+import { UserService } from '../user.service';
 
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 @Component({

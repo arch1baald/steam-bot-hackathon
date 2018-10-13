@@ -7,7 +7,7 @@
 
 }
 .header{
-    background-image: url("C:\Users\Simonas\Desktop\steam-bot-hackathon\steam-bot-hackathon\frontend\src\app\images\colored_body_top2.png");
+    background-image: url("..\images\colored_body_top2.png");
     height: 15vh;
     text-align: center;
 }
@@ -19,7 +19,7 @@
 
 }
 .content{
-    background-image: url("C:\Users\Simonas\Desktop\steam-bot-hackathon\steam-bot-hackathon\frontend\src\app\images\Desktop.png");
+    background-image: url("..\images\Desktop.png");
     height: 90vh;
     display: grid;
     grid-template-columns: 1fr, 1fr;

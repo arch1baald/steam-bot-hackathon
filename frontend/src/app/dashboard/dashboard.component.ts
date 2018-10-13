@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {ModalViewComponent} from '../modal-view/modal-view.component';
+import {Router} from '@angular/router'
+import { UserService } from '../user.service'
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
