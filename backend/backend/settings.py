@@ -75,12 +75,59 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'pivas',
+#         'USER': 'admin',
+#         'PASSWORD': 'GiveMeYourMoney3000',
+#         # https://console.cloud.google.com/sql/instances
+#         'HOST': '35.241.218.78',
+#         'PORT': '5432', #at the moment of this writing google cloud postgresql is using the default postgresql port 5432
+#         'OPTIONS': {
+#             'sslmode': 'verify-ca', #leave this line intact
+#             'sslrootcert': os.environ['PGSSLROOTCERT'],
+#             "sslcert": os.environ['PGSSLCERT'],
+#             "sslkey": os.environ['PGSSLKEY'],
+#         }
+#     }
+# }
+
+if os.getenv('GAE_APPLICATION', None):
+    # Running on production App Engine, so connect to Google Cloud SQL using
+    # the unix socket at /cloudsql/<your-cloudsql-connection string>
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'HOST': '/cloudsql/pivasbot:europe-west1:pivas',
+            'USER': 'admin',
+            'PASSWORD': 'GiveMeYourMoney3000',
+            'NAME': 'postgres',
+        }
     }
-}
+else:
+    # Running locally so connect to either a local MySQL instance or connect to
+    # Cloud SQL via the proxy. To start the proxy via command line:
+    #
+    #     $ cloud_sql_proxy -instances=[INSTANCE_CONNECTION_NAME]=tcp:3306
+    #
+    # See https://cloud.google.com/sql/docs/mysql-connect-proxy
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'HOST': '127.0.0.1',
+            'PORT': '5432',
+            'USER': 'admin',
+            'PASSWORD': 'GiveMeYourMoney3000',
+            'NAME': 'postgres',
+        }
+    }
 
 
 # Password validation
@@ -119,4 +166,5 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
+STATIC_ROOT = 'static'
 STATIC_URL = '/static/'
