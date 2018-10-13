@@ -1,8 +1,4 @@
 
-<<<<<<< HEAD
-  <button type="button" mat-raised-button color="warn" (click)="sendSettings(NameForm.value, DiscriptionForm.value, WelcomeForm.value, RespondForm.value)">Change settings</button>
-</form>
-=======
 <div class="page1">
     <div class="grid">
         <div class="header">
@@ -21,23 +17,23 @@
                 </div>
                 <div class="descriptionForm">
                     <mat-form-field>
-                      <input #DiscriptionForm matInput placeholder="Discription" value={{botDiscription}}>
+                      <textarea #DiscriptionForm matInput placeholder="Discription" value={{botDiscription}}>></textarea>
                       </mat-form-field><br>
                 </div>
                 <div class="welcomeForm">
                     <mat-form-field>
-                        <input #WelcomeForm matInput placeholder="Welcome message" value={{botWelcome}}>
+                        <textarea #WelcomeForm matInput placeholder="Welcome message" value={{botWelcome}}>></textarea>
                       </mat-form-field><br>
                 </div>
                 <div class="respondForm">
                     <mat-form-field>
-                      <input #RespondForm matInput placeholder="Respond message" value={{botRespond}}>
+                      <textarea #RespondForm matInput placeholder="Respond message" value={{botRespond}}>></textarea>
                     </mat-form-field><br>
                 </div>
 
 
                 <div>
-                <button class="btn" type="button" mat-stroked-button color="accent"  (click)="sendSettings(NameForm.value, DiscriptionForm.value, RespondForm.value)">Change settings</button>
+                <button class="btn" type="button" mat-raised-button color="accent"  (click)="sendSettings(NameForm.value, DiscriptionForm.value, RespondForm.value)">Change settings</button>
               </div>
             
           </form>
@@ -46,4 +42,3 @@
         </div>
       </div>
 </div>
->>>>>>> setting page added
