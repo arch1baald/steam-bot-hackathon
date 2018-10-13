@@ -10,10 +10,10 @@ namespace SteamBot.Controllers
     public class BotController : ControllerBase
     {
         [HttpPost("/sendsingle")]
-        public ActionResult<string> SendOne(string userId, string messageText)
+        public ActionResult<string> SendOne(string user64Id, string messageText)
         {
             var service = new MessageService(messageText);
-            var isSent = service.SendSingle(userId);
+            var isSent = service.SendSingle(user64Id);
             return Ok(isSent);
         }
 
@@ -23,6 +23,14 @@ namespace SteamBot.Controllers
             var service = new MessageService(messageText);
             var isSent = service.SendAllFriends();
             return Ok(isSent);
+        }
+
+        [HttpGet("/getfriendsIds")]
+        public IActionResult GetAllIds()
+        {
+            var service = new MessageService();
+            var result = service.GetAllIds();
+            return Ok(result);
         }
 
         [HttpPost("/acceptFriendsAndSendMessage")]

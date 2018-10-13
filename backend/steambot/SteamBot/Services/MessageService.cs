@@ -1,5 +1,7 @@
 using SteamKit2;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace SteamBot.Services
@@ -9,7 +11,8 @@ namespace SteamBot.Services
         SendSingle,
         SendAll,
         AcceptFriends,
-        GetInfo
+        GetInfo,
+        GetAllIds
     }
     public class MessageService
     {
@@ -42,6 +45,7 @@ namespace SteamBot.Services
 
         public bool SendSingle(string userId)
         {
+            _userId = userId;
             _cmd = Command.SendSingle;
             var result = RunClient();
             return result;
@@ -68,6 +72,15 @@ namespace SteamBot.Services
             _userInfoVm = new UserInfoVm();
             var result = RunClient();
             return _userInfoVm;
+        }
+
+        List<string> _friendsIds;
+        public IEnumerable<string> GetAllIds()
+        {
+            _friendsIds = new List<string>();
+            _cmd = Command.GetAllIds;
+            var result = RunClient();
+            return _friendsIds.Distinct();
         }
 
         private bool RunClient()
@@ -193,9 +206,12 @@ namespace SteamBot.Services
                 }
                 else if (_cmd == Command.SendSingle)
                 {
-                    if (Convert.ToUInt64(_userId) == steamIdFriend.ConvertToUInt64())
+                    if (_userId == steamIdFriend.ConvertToUInt64().ToString())
+                    {
                         _steamFriends.SendChatMessage(steamIdFriend, EChatEntryType.ChatMsg, _messageText);
-                    _isMessageSent = true;
+                        _isMessageSent = true;
+                        break;
+                    }
                 }
                 else if (_cmd == Command.AcceptFriends)
                 {
@@ -208,8 +224,15 @@ namespace SteamBot.Services
                             _steamFriends.SendChatMessage(friend.SteamID, EChatEntryType.ChatMsg, _messageText);
                             _isMessageSent = true;
                         }
-
                     }
+                }
+                else if (_cmd == Command.GetAllIds)
+                {
+                    foreach (var friend in callback.FriendList)
+                    {
+                        _friendsIds.Add(friend.SteamID.ConvertToUInt64().ToString());
+                    }
+                    _isMessageSent = true;
                 }
             }
             if (_cmd == Command.GetInfo)
@@ -217,6 +240,7 @@ namespace SteamBot.Services
                 _userInfoVm.botName = _steamFriends.GetPersonaName();
                 _userInfoVm.botStatus = _steamFriends.GetPersonaState().ToString();
                 _userInfoVm.friendsCount = friendCount;
+                _isMessageSent = true;
             }
             if (_cmd == Command.SendAll)
             {
