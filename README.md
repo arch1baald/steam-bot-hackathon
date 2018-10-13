@@ -48,3 +48,7 @@ acc and pass in slack
 
 ## Backend JSON API endpoints
 http://127.0.0.1:8000/api/getExample/ - GET example
+
+## Deploy
+`cd backend`
+`gcloud app deploy`

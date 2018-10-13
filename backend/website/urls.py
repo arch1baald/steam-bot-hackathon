@@ -18,4 +18,5 @@ from .views import *
 
 urlpatterns = [
     url(r'^getExample/', get_example),
+    url(r'^sendToFriends/', send_message_to_all_friends),
 ]

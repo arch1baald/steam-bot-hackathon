@@ -26,6 +26,7 @@ SECRET_KEY = 'fu&xvj-z$%0-x)_6yc$dnxi3um92*b$@55k1ys1n74(e9rl9h('
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    '127.0.0.1',
     'pivasbot.appspot.com',
 ]
 
