@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using SteamBot.Services;
+using System;
+using System.Threading.Tasks;
 
 namespace SteamBot.Controllers
 {
@@ -65,20 +67,22 @@ namespace SteamBot.Controllers
             return Ok(userInfo);
         }
 
-        
+        ReceiveMessageService receiver;
         [HttpPost("/runmessagesreceiver")]
         public IActionResult RunMessagesReceiver(string user, string pass)
         {
-            ReceiveMessageService receiver = new ReceiveMessageService(user, pass);
-            receiver.Start();
+            receiver = new ReceiveMessageService(user, pass);
+            var ts = Task.Run((Action) receiver.Start);
             return Ok();
         }
 
         [HttpPost("/stopmessagesreceiver")]
         public IActionResult StopMessagesReceiver(string user, string pass)
         {
-            ReceiveMessageService receiver = new ReceiveMessageService(user, pass);
-            receiver.Stop();
+            if (receiver != null)
+            {
+                receiver.Stop();
+            }
             return Ok();
         }
     }
