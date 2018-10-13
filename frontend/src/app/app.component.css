@@ -8,3 +8,39 @@
 .example-full-width {
   width: 100%;
 }
+mat-toolbar{
+  background-color: #2E2E2E;
+}
+
+.nav{
+  display: inline;
+  width:40%;
+
+}
+.nav a{
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  line-height: normal;
+  font-size: 20px;
+  text-align: center;
+  color: #FFFFFF;
+  padding-left: 5%;
+  padding-right: 5%;
+
+}
+.nick{
+  margin-left: 60%;
+  width:40%;
+
+}
+.nick a{
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  line-height: normal;
+  font-size: 20px;
+  text-align: center;
+  color: #FFFFFF;
+
+}

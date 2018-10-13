@@ -1,15 +1,10 @@
 
 <div class="page1">
     <div class="grid">
-        <div class="header">
-          <h1>STEAM BOT</h1>
-        </div>
+                  <div class="content">
+                    <div class="square">
 
-
-        <div class="content">
-          <div class="settingCard">
-              <form class="example-form">
-
+                    </div>
                 <div class="nameForm">
                     <mat-form-field >
                         <input #NameForm matInput placeholder="Bot name" value={{botName}}>
@@ -31,14 +26,11 @@
                     </mat-form-field><br>
                 </div>
 
+                <div class="btn">
+                <button type="button" mat-raised-button color="accent"  (click)="sendSettings(NameForm.value, DiscriptionForm.value, RespondForm.value)">Change settings</button>
 
-                <div>
-                <button class="btn" type="button" mat-raised-button color="accent"  (click)="sendSettings(NameForm.value, DiscriptionForm.value, WelcomeForm.value, RespondForm.value)">Change settings</button>
               </div>
-            
-          </form>
-          </div>
-            
-        </div>
+            </div>
+          
       </div>
 </div>

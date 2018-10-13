@@ -1,9 +1,15 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <a [routerLink]="'/newMessage'">New message</a>
-    <a [routerLink]="'/dashboard'">Dashboard</a>
-    <a [routerLink]="'/settings'">Settings</a>
-  </mat-toolbar-row>
+<mat-toolbar>
+  
+    <div class="nav">
+        <a [routerLink]="'/newMessage'">New message</a>
+        <a [routerLink]="'/dashboard'">Dashboard</a>
+        <a [routerLink]="'/settings'">Settings</a>
+    </div>
+    <div class="nick">
+        <a>Nickname</a>
+    </div>
+    
+
 </mat-toolbar>
 
 
