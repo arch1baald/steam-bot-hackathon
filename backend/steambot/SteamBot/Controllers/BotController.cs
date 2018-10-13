@@ -32,5 +32,13 @@ namespace SteamBot.Controllers
             var isSent = service.AcceptFriendsAndSendMessage();
             return Ok(isSent); // If false, no pending friends requests.
         }
+
+        [HttpPost("/userInfo")]
+        public IActionResult GetUserInfo()
+        {
+            var service = new MessageService();
+            var userInfo = service.GetBotInfo();
+            return Ok(userInfo);
+        }
     }
 }

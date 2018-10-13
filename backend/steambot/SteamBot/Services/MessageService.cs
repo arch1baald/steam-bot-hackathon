@@ -8,7 +8,8 @@ namespace SteamBot.Services
     {
         SendSingle,
         SendAll,
-        AcceptFriends
+        AcceptFriends,
+        GetInfo
     }
     public class MessageService
     {
@@ -58,6 +59,15 @@ namespace SteamBot.Services
             _cmd = Command.AcceptFriends;
             var result = RunClient();
             return result;
+        }
+
+        private UserInfoVm _userInfoVm;
+        public UserInfoVm GetBotInfo()
+        {
+            _cmd = Command.GetInfo;
+            _userInfoVm = new UserInfoVm();
+            var result = RunClient();
+            return _userInfoVm;
         }
 
         private bool RunClient()
@@ -201,6 +211,12 @@ namespace SteamBot.Services
 
                     }
                 }
+            }
+            if (_cmd == Command.GetInfo)
+            {
+                _userInfoVm.botName = _steamFriends.GetPersonaName();
+                _userInfoVm.botStatus = _steamFriends.GetPersonaState().ToString();
+                _userInfoVm.friendsCount = friendCount;
             }
             if (_cmd == Command.SendAll)
             {
