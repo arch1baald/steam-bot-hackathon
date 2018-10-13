@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'pivasbot.appspot.com',
+    'http://localhost.localdomain',
 ]
 
 
@@ -74,33 +75,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'pivas',
-#         'USER': 'admin',
-#         'PASSWORD': 'GiveMeYourMoney3000',
-#         # https://console.cloud.google.com/sql/instances
-#         'HOST': '35.241.218.78',
-#         'PORT': '5432', #at the moment of this writing google cloud postgresql is using the default postgresql port 5432
-#         'OPTIONS': {
-#             'sslmode': 'verify-ca', #leave this line intact
-#             'sslrootcert': os.environ['PGSSLROOTCERT'],
-#             "sslcert": os.environ['PGSSLCERT'],
-#             "sslkey": os.environ['PGSSLKEY'],
-#         }
-#     }
-# }
 
 if os.getenv('GAE_APPLICATION', None):
     # Running on production App Engine, so connect to Google Cloud SQL using
