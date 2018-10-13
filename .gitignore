@@ -111,4 +111,5 @@ venv.bak/
 frontend/node_modules
 frontend/.firebase
 backend/steambot
+backend/steambot/SteamBot/bin
 

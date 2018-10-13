@@ -1,5 +1,6 @@
 using SteamKit2;
 using System;
+using System.Threading;
 
 namespace SteamBot.Services
 {
@@ -179,7 +180,7 @@ namespace SteamBot.Services
                 if (_cmd == Command.SendAll)
                 {
                     _steamFriends.SendChatMessage(steamIdFriend, EChatEntryType.ChatMsg, _messageText);
-                    _isMessageSent = true;
+                    Thread.Sleep(1);
                 }
                 else if (_cmd == Command.SendSingle)
                 {
@@ -201,7 +202,10 @@ namespace SteamBot.Services
 
                     }
                 }
-
+            }
+            if (_cmd == Command.SendAll)
+            {
+                _isMessageSent = true;
             }
         }
 
