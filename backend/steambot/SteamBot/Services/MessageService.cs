@@ -173,14 +173,13 @@ namespace SteamBot.Services
             {
                 // steamids identify objects that exist on the steam network, such as friends, as an example
                 SteamID steamIdFriend = _steamFriends.GetFriendByIndex(x);
-
                 // we'll just display the STEAM_ rendered version
                 Console.WriteLine("Friend: {0}", steamIdFriend.Render());
 
                 if (_cmd == Command.SendAll)
                 {
                     _steamFriends.SendChatMessage(steamIdFriend, EChatEntryType.ChatMsg, _messageText);
-                    Thread.Sleep(1);
+                    Thread.Sleep(1000);
                 }
                 else if (_cmd == Command.SendSingle)
                 {
@@ -218,7 +217,6 @@ namespace SteamBot.Services
         void OnPersonaState(SteamFriends.PersonaStateCallback callback)
         {
             // this callback is received when the persona state (friend information) of a friend changes
-
             // for this sample we'll simply display the names of the friends
             Console.WriteLine("State change: {0}", callback.Name);
         }
