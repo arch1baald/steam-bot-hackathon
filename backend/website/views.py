@@ -70,3 +70,26 @@ def get_settings(request):
     ))
     result['Access-Control-Allow-Origin'] = '*'
     return result
+
+
+@require_GET
+def get_dashboard(request):
+    name = 'Hackathon Steam Bot'
+    link = 'https://steamcommunity.com/id/self_motion/'
+    current_friends = 15
+    max_friends = 250
+    messages = [
+        dict(number=1, sent=12, readed=10, clicked=346, uniqueClicked=2134),
+        dict(number=2, sent=1745, readed=0, clicked=8, uniqueClicked=444),
+        dict(number=3, sent=23, readed=125, clicked=13435, uniqueClicked=5),
+        dict(number=4, sent=66666, readed=54, clicked=0, uniqueClicked=0),
+    ]
+    result = JsonResponse(dict(
+        nameBot=name,
+        linkBot=link,
+        currFriends=current_friends,
+        maxFriends=max_friends,
+        steamMessages=messages,
+    ))
+    result['Access-Control-Allow-Origin'] = '*'
+    return result
