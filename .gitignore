@@ -107,3 +107,8 @@ venv.bak/
 .idea/
 *.direnv/
 .direnv/*
+
+frontend/node_modules
+frontend/.firebase
+backend/steambot
+
