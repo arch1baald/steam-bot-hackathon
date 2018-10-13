@@ -10,72 +10,74 @@ namespace SteamBot.Controllers
     public class BotController : ControllerBase
     {
         [HttpPost("/sendsingle")]
-        public ActionResult<string> SendOne(string user64Id, string messageText)
+        public ActionResult<string> SendOne(string user, string pass, string user64Id, string messageText)
         {
-            var service = new MessageService(messageText);
+            var service = new MessageService(user, pass, messageText);
             var isSent = service.SendSingle(user64Id);
             return Ok(isSent);
         }
 
         [HttpPost("/sendall")]
-        public IActionResult SendAll(string messageText)
+        public IActionResult SendAll(string user, string pass, string messageText)
         {
-            var service = new MessageService(messageText);
+            var service = new MessageService(user, pass, messageText);
             var isSent = service.SendAllFriends();
             return Ok(isSent);
         }
 
         [HttpGet("/getfriendsIds")]
-        public IActionResult GetAllIds()
+        public IActionResult GetAllIds(string user, string pass)
         {
-            var service = new MessageService();
+            var service = new MessageService(user, pass);
             var result = service.GetAllIds();
             return Ok(result);
         }
 
         [HttpGet("/getbot64Id")]
-        public IActionResult GetBot64Id()
+        public IActionResult GetBot64Id(string user, string pass)
         {
-            var service = new MessageService();
+            var service = new MessageService(user, pass);
             var result = service.GetBot64Id();
             return Ok(result);
         }
 
         [HttpPost("/acceptFriendsAndSendMessage")]
-        public IActionResult AcceptFriendsRequestsAndSendMessage(string messageText)
+        public IActionResult AcceptFriendsRequestsAndSendMessage(string user, string pass, string messageText)
         {
-            var service = new MessageService(messageText);
+            var service = new MessageService(user, pass, messageText);
             var isSent = service.AcceptFriendsAndSendMessage();
             return Ok(isSent); // If false, no pending friends requests.
         }
 
         [HttpPost("/userInfo")]
-        public IActionResult GetUserInfo()
+        public IActionResult GetUserInfo(string user, string pass)
         {
-            var service = new MessageService();
+            var service = new MessageService(user, pass);
             var userInfo = service.GetBotInfo();
             return Ok(userInfo);
         }
 
         [HttpPost("/friendInfo")]
-        public IActionResult GetFriendInfo(string user64Id)
+        public IActionResult GetFriendInfo(string user, string pass, string user64Id)
         {
-            var service = new MessageService();
+            var service = new MessageService(user, pass);
             var userInfo = service.GetFriendInfo(user64Id);
             return Ok(userInfo);
         }
 
-        ReceiveMessageService receiver = new ReceiveMessageService();
+        
         [HttpPost("/runmessagesreceiver")]
-        public IActionResult RunMessagesReceiver()
+        public IActionResult RunMessagesReceiver(string user, string pass)
         {
+            ReceiveMessageService receiver = new ReceiveMessageService(user, pass);
             receiver.Start();
             return Ok();
         }
 
         [HttpPost("/stopmessagesreceiver")]
-        public IActionResult StopMessagesReceiver()
+        public IActionResult StopMessagesReceiver(string user, string pass)
         {
+            ReceiveMessageService receiver = new ReceiveMessageService(user, pass);
             receiver.Stop();
             return Ok();
         }

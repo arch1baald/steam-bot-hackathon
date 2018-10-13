@@ -36,12 +36,14 @@ namespace SteamBot.Services
 
         Command _cmd;
 
-        public MessageService() : this("This is default message sent from chat bot: Zdarowa")
+        public MessageService(string user, string pass) : this(user, pass, "This is default message sent from chat bot: Zdarowa")
         {
         }
 
-        public MessageService(string messageText)
+        public MessageService(string user, string pass, string messageText)
         {
+            _user = user;
+            _pass = pass;
             _messageText = messageText;
         }
 

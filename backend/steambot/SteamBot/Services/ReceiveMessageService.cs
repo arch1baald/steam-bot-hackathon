@@ -22,8 +22,10 @@ namespace SteamBot.Services
 
         private static readonly HttpClient client = new HttpClient();
 
-        public ReceiveMessageService()
+        public ReceiveMessageService(string user, string pass)
         {
+            _user = user;
+            _pass = pass;
         }
 
         public void Start()
