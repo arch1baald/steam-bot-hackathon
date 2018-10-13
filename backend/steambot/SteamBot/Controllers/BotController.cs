@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using SteamBot.Services;
 
 namespace SteamBot.Controllers
 {
+    [EnableCors("CorsPolicy")]
     [Route("api/bot")]
     [ApiController]
     public class BotController : ControllerBase
