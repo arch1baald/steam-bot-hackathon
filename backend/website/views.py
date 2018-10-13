@@ -17,6 +17,7 @@ def update_headers(result):
 
 
 @csrf_exempt
+# TODO: user_name via request
 def send_message_to_all_friends(request, user_name='Dmitry'):
     data = request.body.decode()
     if not data:
@@ -64,28 +65,23 @@ def get_example(request):
 
 
 @require_GET
-def get_settings(request):
-    description = (
-        'This bot demonstrates the basic functionality of the service. '
-        'Next comes the useless text to check the molds on the front. '
-        'Fyvaofyvshchaaofyvshchaofyvafyvalovololvrffvzgavzshgprrfshzgva'
-        'prfshgrp fyscharfshrr Fyvshchrfshkvvarschf rfshvagrfshkkrfigrySUSHASHFRYVSHShR.'
-    )
-    welcome_message = (
-        'Hello My Nigga, Let\'s make some shit: https://www.google.lt/url?sa=i'
-        '&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwjK5Y3H0IPeA'
-        'hVKjywKHRrrBgQQjRx6BAgBEAU&url=https%3A%2F%2Fcoub.com%2Fview%2Fzessikr&psi'
-        'g=AOvVaw1_NaR_ZjqKlnfsaRMf0dMg&ust=1539527376847073'
-    )
-    default_response = (
-        'Zbs, chotka.'
-    )
+def get_settings(request, user_name='Dmitry'):
+    user = User.objects.filter(name=user_name)
+    # TODO: unique checks via steam_id
+    user = user[0]
+    bots = Bot.objects.filter(owner=user)
+    if bots:
+        bot = bots[0]
+    else:
+        result = JsonResponse(dict(status='error'))
+        update_headers(result)
+        return result
 
     result = JsonResponse(dict(
-        botName='Hackathon Steam Bot',
-        botDiscription=description,
-        botWelcome=welcome_message,
-        botRespond=default_response,
+        botName=bot.name,
+        botDiscription=bot.description,
+        botWelcome=bot.welcome,
+        botRespond=bot.response,
     ))
     update_headers(result)
     return result

@@ -57,7 +57,7 @@ def update_user(name, steam_id=None):
     User.objects.update_or_create(name=name, steam_id=steam_id)
 
 
-def update_bot(account, password, owner):
+def update_bot_meta(account, password, owner):
     data = get_bot_info(account, password)
     steam_id = get_steam_id(account, password)
     Bot.objects.update_or_create(
@@ -67,9 +67,25 @@ def update_bot(account, password, owner):
             owner=owner,
             name=data['botName'],
             steam_id=steam_id,
-            # status=data['botStatus'],
+            state=data['botStatus'],
+            friends_count=data['friendsCount'],
+            country=data['country'],
+            facebook_name=data['facebookName'],
+            steam_url=data['profileUrl'],
         )
     )
+
+
+def set_bot_welcome(bot, message):
+    bot = Bot.objects.filter(id=bot.id)
+    if bot:
+        bot.update(welcome=message)
+
+
+def set_bot_response(bot, message):
+    bot = Bot.objects.filter(id=bot.id)
+    if bot:
+        bot.update(response=message)
 
 
 def update_bot_friends(bot):
