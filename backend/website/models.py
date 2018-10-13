@@ -1,8 +1,20 @@
 from django.db import models
 
 
+class User(models.Model):
+    name = models.TextField()
+    steam_id = models.BigIntegerField(null=True, blank=True)
+
+    def __str__(self):
+        return f'ID: {self.id}, steam_id: {self.steam_id}'
+
+
 class Bot(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.PROTECT, default=None)
+    account = models.TextField(blank=True, null=True)
+    password = models.TextField(blank=True, null=True)
     name = models.TextField(blank=True, null=True)
+    steam_id = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     welcome = models.TextField(blank=True, null=True)
     response = models.TextField(blank=True, null=True)
@@ -11,8 +23,18 @@ class Bot(models.Model):
         return f'ID: {self.id}, Name: {self.name}'
 
 
+class BotFriend(models.Model):
+    bot = models.ForeignKey(Bot, on_delete=models.PROTECT, default=None)
+    steam_id = models.BigIntegerField()
+
+    def __str__(self):
+        # return f'ID: {self.id}, STEAM_ID: {self.steam_id}'
+        return f'ID: {self.id}'
+
+
 class Message(models.Model):
-    bot = models.ForeignKey(Bot, on_delete=models.PROTECT)
+    bot = models.ForeignKey(Bot, on_delete=models.PROTECT, default=None)
+    friend = models.ForeignKey(BotFriend, on_delete=models.PROTECT, default=None)
     text = models.TextField()
     sent_at = models.DateTimeField()
 

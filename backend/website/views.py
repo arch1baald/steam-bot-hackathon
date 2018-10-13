@@ -1,10 +1,56 @@
-import time
 import json
-import requests
 
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST, require_GET
+from django.views.decorators.http import require_GET
+from django.utils import timezone
+
+from .models import User, Bot, BotFriend, Message
+from .utils import send_message_via_steam
+
+
+def update_headers(result):
+    result["Access-Control-Allow-Origin"] = "*"
+    result["Access-Control-Allow-Methods"] = "GET, OPTIONS, POST"
+    result["Access-Control-Max-Age"] = "1000"
+    result["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
+
+
+@csrf_exempt
+def send_message_to_all_friends(request, user_name='Dmitry'):
+    data = request.body.decode()
+    if not data:
+        result = JsonResponse(dict(status='empty'))
+        update_headers(result)
+        return result
+
+    data = json.loads(data)
+    if 'Message' not in data:
+        result = JsonResponse(dict(status='error'))
+        update_headers(result)
+        return result
+
+    message = data['Message']
+
+    user = User.objects.filter(name=user_name)
+    # TODO: unique checks via steam_id
+    user = user[0]
+    bots = Bot.objects.filter(owner=user)
+    for bot in bots:
+        bot_friends = BotFriend.objects.filter(bot=bot)
+        for friend in bot_friends:
+            print(f'SENDING... from={bot}, to={friend}, time={timezone.now()}')
+            Message.objects.create(
+                bot=bot,
+                friend=friend,
+                text=message,
+                sent_at=timezone.now(),
+            )
+            send_message_via_steam(bot.account, bot.password, friend.steam_id, message)
+
+    result = JsonResponse(dict(status='ok'))
+    update_headers(result)
+    return result
 
 
 @require_GET
@@ -13,34 +59,7 @@ def get_example(request):
         'key1': 'value1',
         'key2': ['list_member1', 'list_member2'],
     })
-    result['Access-Control-Allow-Origin'] = '*'
-    return result
-
-
-@csrf_exempt
-# @require_POST
-def send_message_to_all_friends(request):
-    endpoint = "https://steambot20181013015404.azurewebsites.net/sendall?messageText="
-    response = request.body.decode()
-    if not response:
-        result = JsonResponse(dict(status='empty'))
-        result['Access-Control-Allow-Origin'] = '*'
-        return result
-
-    response = json.loads(response)
-    if 'Message' not in response or 'Id' not in response:
-        result = JsonResponse(dict(status='error'))
-        result['Access-Control-Allow-Origin'] = '*'
-        return result
-
-    id, message = response['Id'], response['Message']
-    print(f'ID: {id}, TIME: {time.time()}, MESSAGE: {message}')
-    url = f'{endpoint}{message}'
-    url.replace(' ', '%20')
-    requests.post(url)
-
-    result = JsonResponse(dict(status='ok'))
-    result['Access-Control-Allow-Origin'] = '*'
+    update_headers(result)
     return result
 
 
@@ -68,7 +87,7 @@ def get_settings(request):
         botWelcome=welcome_message,
         botRespond=default_response,
     ))
-    result['Access-Control-Allow-Origin'] = '*'
+    update_headers(result)
     return result
 
 
@@ -97,5 +116,5 @@ def get_dashboard(request):
         maxFriends=max_friends,
         steamMessages=messages,
     ))
-    result['Access-Control-Allow-Origin'] = '*'
+    update_headers(result)
     return result
