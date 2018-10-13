@@ -1,8 +1,14 @@
-﻿using SteamKit2;
+using SteamKit2;
 using System;
 
 namespace SteamBot.Services
 {
+    public enum Command
+    {
+        SendSingle,
+        SendAll,
+        AcceptFriends
+    }
     public class MessageService
     {
         SteamClient _steamClient;
@@ -14,10 +20,14 @@ namespace SteamBot.Services
         private string _user = "hacktestbot";//args[ 0 ];
         private string _pass = "GiveMeYourMoney3000";//args[ 1 ];
 
-        private readonly string _messageText;
+        private string _messageText;
 
         private bool _isRunning = false;
         private bool _isMessageSent = false;
+
+        private string _userId = null;
+
+        Command _cmd;
 
         public MessageService() : this("This is default message sent from chat bot: Zdarowa")
         {
@@ -28,7 +38,28 @@ namespace SteamBot.Services
             _messageText = messageText;
         }
 
-        public bool SendMessage()
+        public bool SendSingle(string userId)
+        {
+            _cmd = Command.SendSingle;
+            var result = RunClient();
+            return result;
+        }
+
+        public bool SendAllFriends()
+        {
+            _cmd = Command.SendAll;
+            var result = RunClient();
+            return result;
+        }
+
+        public bool AcceptFriendsAndSendMessage()
+        {
+            _cmd = Command.AcceptFriends;
+            var result = RunClient();
+            return result;
+        }
+
+        private bool RunClient()
         {
             // create our steamclient instance
             var configuration = SteamConfiguration.Create(b => b.WithProtocolTypes(ProtocolTypes.Tcp));
@@ -69,7 +100,7 @@ namespace SteamBot.Services
             {
                 // in order for the callbacks to get routed, they need to be handled by the _manager
                 _manager.RunWaitAllCallbacks(TimeSpan.FromSeconds(2));
-                attempts++;
+                attempts--;
             }
 
             return _isMessageSent;
@@ -144,21 +175,34 @@ namespace SteamBot.Services
 
                 // we'll just display the STEAM_ rendered version
                 Console.WriteLine("Friend: {0}", steamIdFriend.Render());
-                _steamFriends.SendChatMessage(steamIdFriend, EChatEntryType.ChatMsg, _messageText);
-                _isMessageSent = true;
-            }
 
-            // we can also iterate over our friendslist to accept or decline any pending invites
-            /*
-            foreach (var friend in callback.FriendList)
-            {
-                if (friend.Relationship == EFriendRelationship.RequestRecipient)
+                if (_cmd == Command.SendAll)
                 {
-                    // this _user has added us, let's add him back
-                    _steamFriends.AddFriend(friend.SteamID);
+                    _steamFriends.SendChatMessage(steamIdFriend, EChatEntryType.ChatMsg, _messageText);
+                    _isMessageSent = true;
+                }
+                else if (_cmd == Command.SendSingle)
+                {
+                    if (Convert.ToUInt64(_userId) == steamIdFriend.ConvertToUInt64())
+                        _steamFriends.SendChatMessage(steamIdFriend, EChatEntryType.ChatMsg, _messageText);
+                    _isMessageSent = true;
+                }
+                else if (_cmd == Command.AcceptFriends)
+                {
+                    foreach (var friend in callback.FriendList)
+                    {
+                        if (friend.Relationship == EFriendRelationship.RequestRecipient)
+                        {
+                            // this _user has added us, let's add him back and send him a message
+                            _steamFriends.AddFriend(friend.SteamID);
+                            _steamFriends.SendChatMessage(friend.SteamID, EChatEntryType.ChatMsg, _messageText);
+                            _isMessageSent = true;
+                        }
+
+                    }
                 }
 
-            } */
+            }
         }
 
         void OnFriendAdded(SteamFriends.FriendAddedCallback callback)

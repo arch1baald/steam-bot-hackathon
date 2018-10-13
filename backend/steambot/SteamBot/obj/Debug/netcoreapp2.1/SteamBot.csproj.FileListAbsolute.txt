@@ -26,3 +26,4 @@ C:\Users\vdeiv\Desktop\Hacking\steam-bot-hackathon\backend\steambot\SteamBot\obj
 C:\Users\vdeiv\Desktop\Hacking\steam-bot-hackathon\backend\steambot\SteamBot\obj\Debug\netcoreapp2.1\SteamBot.RazorTargetAssemblyInfo.cache
 C:\Users\vdeiv\Desktop\Hacking\steam-bot-hackathon\backend\steambot\SteamBot\obj\Debug\netcoreapp2.1\SteamBot.dll
 C:\Users\vdeiv\Desktop\Hacking\steam-bot-hackathon\backend\steambot\SteamBot\obj\Debug\netcoreapp2.1\SteamBot.pdb
+C:\Users\vdeiv\Desktop\Hacking\steam-bot-hackathon\backend\steambot\SteamBot\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs
