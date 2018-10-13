@@ -1,0 +1,77 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.grid{
+    display: grid;
+
+}
+.header{
+    background-image: url("C:\Users\Simonas\Desktop\steam-bot-hackathon\steam-bot-hackathon\frontend\src\app\images\colored_body_top2.png");
+    height: 15vh;
+    text-align: center;
+}
+.header > h1{
+    margin-top: 10px;
+    font-family: "Motiva Sans", Sans-serif;
+    font-size: 50px;
+    color: #b8b6b4;
+
+}
+.content{
+    background-image: url("C:\Users\Simonas\Desktop\steam-bot-hackathon\steam-bot-hackathon\frontend\src\app\images\Desktop.png");
+    height: 90vh;
+    display: grid;
+    grid-template-columns: 1fr, 1fr;
+    grid-template-areas: "description button"
+}
+.footer{
+    background-color: rgb(44, 43, 48);
+    height: 5vh;
+}
+.createBot{
+
+
+}
+.description{
+    grid-area: description;
+}
+
+
+.description > h1{
+    color: rgb(137, 143, 143);
+    font-size: 30px;
+    text-align:center;
+}
+.description > p{
+    color:rgb(137, 143, 143);
+    text-align:center;
+}
+
+.btn{
+    grid-area: button;
+
+}
+.btn > button{
+    margin-top: 40vh;
+    margin-left: 73vw;
+    height: 15vh;
+    width: 20vw;
+    background-color: rgb(11, 114, 11);
+    border: none;
+
+    
+}
+.btn > button > h1{
+    font-family: "Motiva Sans", Sans-serif; 
+    color:rgb(137, 143, 143);
+}
+
+
+.page1{
+    height: 100vh;
+}
+.page2{
+
+    height: 100vh;
+}

@@ -1,0 +1,76 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.grid{
+    display: grid;
+    
+}
+.header{
+    background-image: url("C:\Users\Simonas\Desktop\steam-bot-hackathon\steam-bot-hackathon\frontend\src\app\images\colored_body_top2.png");
+    height: 15vh;
+    text-align: center;
+}
+.header > h1{
+    margin-top: 10px;
+    font-family: "Motiva Sans", Sans-serif;
+    font-size: 50px;
+    color: #b8b6b4;
+
+}
+.content{
+    background-image: url("C:\Users\Simonas\Desktop\steam-bot-hackathon\steam-bot-hackathon\frontend\src\app\images\settingBg.png");
+
+    background-size: cover;
+    background-position-y: -25vh;
+    height: 110%;
+    display: grid;
+}
+.footer{
+    background-color: rgb(44, 43, 48);
+    height: 5vh;
+}
+.nameForm{
+    margin-left: 50vw;
+    margin-top: 10vh;
+}
+.descriptionForm{
+    margin-left: 50vw;
+    
+}
+.welcomeForm{
+    margin-left: 31vw;
+    margin-top: 5vh;
+    
+}
+.respondForm{
+
+    margin-left: 31vw;
+    margin-top: 5vh;
+}
+.btn{
+    margin-left: 55vw;
+    margin-top: 10vh;
+}
+
+mat-form-field{
+    background-color: rgba(250, 250, 250, 0.349);
+    margin:10px;
+}
+
+mat-form-field input{
+    height: auto;
+    width: initial;
+    padding: 0;
+}
+
+
+
+
+.page1{
+    height: 100vh;
+}
+.page2{
+
+    height: 100vh;
+}

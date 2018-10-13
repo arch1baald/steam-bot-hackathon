@@ -1,16 +1,49 @@
-<form class="example-form">
-  <mat-form-field class="example-full-width">
-    <input #NameForm matInput placeholder="Bot name" value={{botName}}>
-  </mat-form-field>
-  <mat-form-field class="example-full-width">
-    <input #DiscriptionForm matInput placeholder="Discription" value={{botDiscription}}>
-  </mat-form-field>
-  <mat-form-field class="example-full-width">
-    <input #WelcomeForm matInput placeholder="Welcome message" value={{botWelcome}}>
-  </mat-form-field>
-  <mat-form-field class="example-full-width">
-    <input #RespondForm matInput placeholder="Respond message" value={{botRespond}}>
-  </mat-form-field>
 
+<<<<<<< HEAD
   <button type="button" mat-raised-button color="warn" (click)="sendSettings(NameForm.value, DiscriptionForm.value, WelcomeForm.value, RespondForm.value)">Change settings</button>
 </form>
+=======
+<div class="page1">
+    <div class="grid">
+        <div class="header">
+          <h1>STEAM BOT</h1>
+        </div>
+
+
+        <div class="content">
+          <div class="settingCard">
+              <form class="example-form">
+
+                <div class="nameForm">
+                    <mat-form-field >
+                        <input #NameForm matInput placeholder="Bot name" value={{botName}}>
+                      </mat-form-field><br>
+                </div>
+                <div class="descriptionForm">
+                    <mat-form-field>
+                      <input #DiscriptionForm matInput placeholder="Discription" value={{botDiscription}}>
+                      </mat-form-field><br>
+                </div>
+                <div class="welcomeForm">
+                    <mat-form-field>
+                        <input #WelcomeForm matInput placeholder="Welcome message" value={{botWelcome}}>
+                      </mat-form-field><br>
+                </div>
+                <div class="respondForm">
+                    <mat-form-field>
+                      <input #RespondForm matInput placeholder="Respond message" value={{botRespond}}>
+                    </mat-form-field><br>
+                </div>
+
+
+                <div>
+                <button class="btn" type="button" mat-stroked-button color="accent"  (click)="sendSettings(NameForm.value, DiscriptionForm.value, RespondForm.value)">Change settings</button>
+              </div>
+            
+          </form>
+          </div>
+            
+        </div>
+      </div>
+</div>
+>>>>>>> setting page added
