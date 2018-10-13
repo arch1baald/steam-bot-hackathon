@@ -85,13 +85,13 @@ namespace SteamBot.Services
             return _friendInfoVm;
         }
 
-        List<string> _friendsIds;
-        public IEnumerable<string> GetAllIds()
+        Dictionary<string, string> _friendsIds;
+        public Dictionary<string, string> GetAllIds()
         {
-            _friendsIds = new List<string>();
+            _friendsIds = new Dictionary<string, string>();
             _cmd = Command.GetAllIds;
             var result = RunClient();
-            return _friendsIds.Distinct();
+            return _friendsIds;
         }
 
         private bool RunClient()
@@ -257,7 +257,11 @@ namespace SteamBot.Services
                 {
                     foreach (var friend in callback.FriendList)
                     {
-                        _friendsIds.Add(friend.SteamID.ConvertToUInt64().ToString());
+                        if (!_friendsIds.ContainsKey(friend.SteamID.ConvertToUInt64().ToString()))
+                        {
+                            var val = _steamFriends.RequestProfileInfo(friend.SteamID).ToTask().Result;
+                            _friendsIds[friend.SteamID.ConvertToUInt64().ToString()] = val.RealName;
+                        }
                     }
                     _isMessageSent = true;
                 }
