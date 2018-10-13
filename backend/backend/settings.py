@@ -25,7 +25,9 @@ SECRET_KEY = 'fu&xvj-z$%0-x)_6yc$dnxi3um92*b$@55k1ys1n74(e9rl9h('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'pivasbot.appspot.com',
+]
 
 
 # Application definition
