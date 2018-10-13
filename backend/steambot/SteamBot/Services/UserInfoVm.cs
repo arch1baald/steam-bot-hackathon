@@ -12,5 +12,6 @@
         public string profileUrl;
         public string state;
         public string steamId;
+        public string image_url;
     }
 }

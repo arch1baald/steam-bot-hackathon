@@ -2,6 +2,8 @@ using SteamKit2;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading;
 
 namespace SteamBot.Services
@@ -150,7 +152,7 @@ namespace SteamBot.Services
                 _manager.RunWaitAllCallbacks(TimeSpan.FromSeconds(5));
                 attempts--;
             }
-            
+
             return _isMessageSent;
         }
 
@@ -222,6 +224,13 @@ namespace SteamBot.Services
                 _userInfoVm.state = _steamFriends.GetPersonaState().ToString();
                 _userInfoVm.steamId = _steamUser.SteamID.ToString();
                 _userInfoVm.profileUrl = "https://steamcommunity.com/profiles/" + _steamUser.SteamID.ConvertToUInt64().ToString();
+                string html;
+                using (WebClient client = new WebClient())
+                {
+                    client.Headers[HttpRequestHeader.UserAgent] = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.121 Safari/535.2";
+                    html = client.DownloadString("https://steamid.xyz/" + _steamUser.SteamID.ConvertToUInt64().ToString());
+                }
+                _userInfoVm.image_url = GetImagesInHTMLString(html);
                 _isMessageSent = true;
             }
         }
@@ -292,6 +301,13 @@ namespace SteamBot.Services
                         _friendInfoVm.state = val.StateName;
                         _friendInfoVm.steamId = steamIdFriend.ToString();
                         _friendInfoVm.profileUrl = "https://steamcommunity.com/profiles/" + steamIdFriend.ConvertToUInt64().ToString();
+                        string html;
+                        using (WebClient client = new WebClient())
+                        {
+                            client.Headers[HttpRequestHeader.UserAgent] = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.121 Safari/535.2";
+                            html = client.DownloadString("https://steamid.xyz/" + val.SteamID.ConvertToUInt64().ToString());
+                        }
+                        _friendInfoVm.image_url = GetImagesInHTMLString(html);
                         _isMessageSent = true;
                     }
                 }
@@ -300,6 +316,22 @@ namespace SteamBot.Services
             {
                 _isMessageSent = true;
             }
+        }
+
+        private string GetImagesInHTMLString(string htmlString)
+        {
+            List<string> images = new List<string>();
+            string pattern = @"<(img)\b[^>]*>";
+
+            Regex rgx = new Regex(pattern, RegexOptions.IgnoreCase);
+            MatchCollection matches = rgx.Matches(htmlString);
+
+            for (int i = 0, l = matches.Count; i < l; i++)
+            {
+                images.Add(matches[i].Value);
+            }
+            string matchString = Regex.Match(images[0], "<img.+?src=[\"'](.+?)[\"'].*?>", RegexOptions.IgnoreCase).Groups[1].Value;
+            return matchString;
         }
 
         void OnFriendAdded(SteamFriends.FriendAddedCallback callback)
