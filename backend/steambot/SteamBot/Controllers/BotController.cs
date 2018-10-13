@@ -49,6 +49,14 @@ namespace SteamBot.Controllers
             return Ok(userInfo);
         }
 
+        [HttpPost("/friendInfo")]
+        public IActionResult GetFriendInfo(string user64Id)
+        {
+            var service = new MessageService();
+            var userInfo = service.GetFriendInfo(user64Id);
+            return Ok(userInfo);
+        }
+
         ReceiveMessageService receiver = new ReceiveMessageService();
         [HttpPost("/runmessagesreceiver")]
         public IActionResult RunMessagesReceiver()

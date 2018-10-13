@@ -12,7 +12,8 @@ namespace SteamBot.Services
         SendAll,
         AcceptFriends,
         GetInfo,
-        GetAllIds
+        GetAllIds,
+        GetFriendInfo
     }
     public class MessageService
     {
@@ -74,6 +75,16 @@ namespace SteamBot.Services
             return _userInfoVm;
         }
 
+        private FriendInfoVm _friendInfoVm;
+        public FriendInfoVm GetFriendInfo(string userId)
+        {
+            _userId = userId;
+            _cmd = Command.GetFriendInfo;
+            _friendInfoVm = new FriendInfoVm();
+            var result = RunClient();
+            return _friendInfoVm;
+        }
+
         List<string> _friendsIds;
         public IEnumerable<string> GetAllIds()
         {
@@ -117,6 +128,8 @@ namespace SteamBot.Services
 
             // initiate the connection
             _steamClient.Connect();
+
+            Thread.Sleep(500);
 
             // create our callback handling loop
             int attempts = 5;
@@ -247,6 +260,21 @@ namespace SteamBot.Services
                         _friendsIds.Add(friend.SteamID.ConvertToUInt64().ToString());
                     }
                     _isMessageSent = true;
+                }
+                else if (_cmd == Command.GetFriendInfo)
+                {
+                    if (_userId == steamIdFriend.ConvertToUInt64().ToString())
+                    {
+                        var val = _steamFriends.RequestProfileInfo(steamIdFriend).ToTask().Result;
+                        _friendInfoVm.country = val.CountryName;
+                        _friendInfoVm.summary = val.Summary;
+                        _friendInfoVm.realName = val.RealName;
+                        _friendInfoVm.headline = val.Headline;
+                        _friendInfoVm.state = val.StateName;
+                        _friendInfoVm.steamId = steamIdFriend.ToString();
+                        _friendInfoVm.profileUrl = "https://steamcommunity.com/profiles/" + steamIdFriend.ConvertToUInt64().ToString();
+                        _isMessageSent = true;
+                    }
                 }
             }
             if (_cmd == Command.SendAll)
