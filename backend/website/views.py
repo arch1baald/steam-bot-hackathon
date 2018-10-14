@@ -136,25 +136,20 @@ def get_dashboard(request):
     bots = Bot.objects.filter(owner=user)
     if bots:
         bot = bots[0]
+        bot = update_bot_meta(bot.account, bot.password, user)
     else:
         result = JsonResponse(dict(status='error', traceback='user has no bot'))
         update_headers(result)
         return result
-
-    # update_bot_meta(bot.account, bot.password, user)
 
     name = bot.name
     link = bot.steam_url
     current_friends = bot.friends_count
     max_friends = 250
     messages_queryset = Message.objects.filter(bot=bot)
-
-    text = 'asdgasdg'
     messages = [
-        dict(number=1, sent=12, readed=10, clicked=346, uniqueClicked=2134, text=text),
-        dict(number=2, sent=1745, readed=0, clicked=8, uniqueClicked=444, text=text),
-        dict(number=3, sent=23, readed=125, clicked=13435, uniqueClicked=5, text=text),
-        dict(number=4, sent=66666, readed=54, clicked=0, uniqueClicked=0, text=text),
+        dict(number=m.mailing.id, text=m.text, sent=1233, readed=700, clicked=346, uniqueClicked=234)
+        for m in messages_queryset
     ]
     result = JsonResponse(dict(
         nameBot=name,

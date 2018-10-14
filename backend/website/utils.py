@@ -34,7 +34,7 @@ def get_steam_id(account, password):
 
 
 def get_bot_info(account, password):
-    endpoint = 'https://steambot20181013015404.azurewebsites.net/userInfo/'
+    endpoint = 'https://steambot20181013015404.azurewebsites.net/botInfo/'
     url = f'{endpoint}?user={account}&pass={password}'
     response = requests.post(url)
     if response.status_code == 200:
@@ -71,7 +71,7 @@ def update_user(name, steam_id=None):
 def update_bot_meta(account, password, owner):
     data = get_bot_info(account, password)
     steam_id = get_steam_id(account, password)
-    Bot.objects.update_or_create(
+    bot, _ = Bot.objects.update_or_create(
         account=account,
         password=password,
         defaults=dict(
@@ -85,6 +85,7 @@ def update_bot_meta(account, password, owner):
             steam_url=data['profileUrl'],
         )
     )
+    return bot
 
 
 def set_bot_welcome(bot, message):
