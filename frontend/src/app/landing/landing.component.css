@@ -14,7 +14,7 @@
     grid-template-areas: "slogan description"
 }
 .slogan{
-
+    margin-left: 10%;
     grid-area: slogan;
     grid-template-columns: 1fr  1fr;
     grid-template-areas: 
@@ -23,7 +23,7 @@
 }
 .slText{
     grid-area: txt;
-    text-align: center;
+    text-align: left;
 }
 .slText >h1{
     font-family: "Motiva Sans", Sans-serif; 
