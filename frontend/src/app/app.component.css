@@ -1,20 +1,18 @@
 
-.example-form {
-  min-width: 150px;
-  max-width: 500px;
-  width: 100%;
-}
-
-.example-full-width {
-  width: 100%;
-}
 mat-toolbar{
   background-color: #2E2E2E;
 }
 
+
+.toolbar mat-toolbar{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-areas:
+  "nav nav nav accInfo accInfo";
+}
+
 .nav{
-  display: inline;
-  width:40%;
+  grid-area: nav;
 
 }
 .nav a{
@@ -30,8 +28,7 @@ mat-toolbar{
 
 }
 .nick{
-  margin-left: 60%;
-  width:40%;
+  grid-area: nick;
 
 }
 .nick a{
@@ -43,4 +40,22 @@ mat-toolbar{
   text-align: center;
   color: #FFFFFF;
 
+}
+.logIn{
+  grid-area: logIn;
+  display: inline;
+  color: white;
+}
+
+.logIn  form{
+  float: left;
+}
+
+.accInfo{
+  grid-area: accInfo;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas: 
+  "logIn . nick";
+  
 }

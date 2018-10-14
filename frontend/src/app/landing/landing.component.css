@@ -8,22 +8,27 @@
 }
 
 .content{
-    background-image: url("..\images\Desktop.png");
-    background-position-y:-20vh;
-    height: 100%;
+
     display: grid;
-    grid-template-columns: 1fr, 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-areas: "slogan description"
 }
 .slogan{
+
     grid-area: slogan;
-    margin-left: 15%;
-    margin-top: 2vh;
+    grid-template-columns: 1fr  1fr;
+    grid-template-areas: 
+    ". txt";
+
 }
-.slogan >h1{
+.slText{
+    grid-area: txt;
+    text-align: center;
+}
+.slText >h1{
     font-family: "Motiva Sans", Sans-serif; 
     color:rgb(137, 143, 143);
-    font-size: 40px;
+    font-size: 55px;
     
 }
 
@@ -32,12 +37,18 @@
     
     grid-area: description;
     display: grid;
-    
-    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
     grid-template-areas:
-     "text"
-     "btn";
+    ". . . . ."
+    ". . text text text"
+     ". . text text text"
+     ". . . accInfo ."
+     ". . . . .";
 }
+.accInfo{
+    grid-area: accInfo;
+  }
 
 
 .text > h1 {
@@ -54,33 +65,26 @@
 }
 
 .text{
-    margin-top:10%;
-    margin-left: 40%;
-    align-self: center;
-    text-align: center;
     grid-area: text;
+    text-align: center;
 }
 
-.btn{
-    margin-bottom: 35%;
-    margin-left: 55%;
-    align-self: center;
-    
-    grid-area: btn;
- 
-
-} 
-.btn > button{
+.accInfo > button{
     height: 10vh;
     width: 15vw;
-    background-color: rgb(11, 114, 11);
+    font-size: 20px;
     border: none;
 }
 
 
 
 .page1{
-    height: 100vh;
+    background-image: url("..\images\Desktop.png");
+    background-size: cover;
+    
+    height: 100%;
+    width: 100%;
+
 }
 .page2{
 
