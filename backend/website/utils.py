@@ -53,6 +53,17 @@ def get_bot_friend_info(account, password, steam_id):
         return None
 
 
+def accept_bot_friend_requests_and_send_welcome(account, password, message):
+    endpoint = 'https://steambot20181013015404.azurewebsites.net/acceptFriendsAndSendMessage/'
+    message = urllib.parse.quote(str(message))
+    url = f'{endpoint}?user={account}&pass={password}&messageText={message}'
+    response = requests.post(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return None
+
+
 def update_user(name, steam_id=None):
     User.objects.update_or_create(name=name, steam_id=steam_id)
 

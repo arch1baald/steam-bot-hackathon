@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^sendToFriends/', send_message_to_all_friends),
     url(r'^getSettings/', get_settings),
     url(r'^getDashboard/', get_dashboard),
+    url(r'^acceptFriendRequests/', accept_friend_requests),
 ]

@@ -8,7 +8,7 @@ from django.utils import timezone
 # import pandas as pd
 
 from .models import User, Bot, BotFriend, Message, Mailing
-from .utils import send_message_via_steam, update_bot_meta
+from .utils import send_message_via_steam, update_bot_meta, accept_bot_friend_requests_and_send_welcome
 
 
 def update_headers(result):
@@ -163,5 +163,35 @@ def get_dashboard(request):
         maxFriends=max_friends,
         steamMessages=messages,
     ))
+    update_headers(result)
+    return result
+
+
+@require_GET
+def accept_friend_requests(request):
+    user_name = request.GET.get('user', None)
+    if user_name is None:
+        result = JsonResponse(dict(status='error', traceback='user is not defined'))
+        update_headers(result)
+        return result
+
+    user = User.objects.filter(name=user_name)
+    if user:
+        user = user[0]
+    else:
+        result = JsonResponse(dict(status='error', traceback='user not found'))
+        update_headers(result)
+        return result
+
+    bots = Bot.objects.filter(owner=user)
+    if not bots:
+        result = JsonResponse(dict(status='error', traceback='user has no bot'))
+        update_headers(result)
+        return result
+
+    for bot in bots:
+        accept_bot_friend_requests_and_send_welcome(bot.account, bot.password, bot.welcome)
+
+    result = JsonResponse(dict(status='ok'))
     update_headers(result)
     return result
