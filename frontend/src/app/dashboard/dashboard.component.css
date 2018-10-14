@@ -8,10 +8,9 @@
 }
 
 .example-header-image {
-  background-image: url('https://cdn6.aptoide.com/imgs/2/b/7/2b7f9860f0980ff2fdcd28aae13a5c7f_icon.png');
+  background-image: url('https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/a2/a25e3d09d51259e3ef3638c8ad5171b4fc22d79f_full.jpg');
   background-size: cover;
 }
-
 .grid{
   background-image: url("..\images\settingBg.png");
   background-size: cover;

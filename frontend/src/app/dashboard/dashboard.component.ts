@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
-import {ModalViewComponent} from '../modal-view/modal-view.component';
-import {Router} from '@angular/router'
-import { UserService } from '../user.service'
+import { Observable } from 'rxjs';
 
+import { UserService } from '../user.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -12,11 +11,11 @@ import { UserService } from '../user.service'
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,private user:UserService) { }
   //https://pivasbot.appspot.com/api/getExample/
   ngOnInit() {
     //this.data=
-    this.http.get("https://pivasbot.appspot.com/api/getDashboard/").subscribe((data:any)=>{
+    this.http.get("https://pivasbot.appspot.com/api/getDashboard/?user="+this.user.getUserId()).subscribe((data:any)=>{
       this.nameBot = data.nameBot;
       this.linkBot = data.linkBot;
       this.currFriends=data.currFriends;

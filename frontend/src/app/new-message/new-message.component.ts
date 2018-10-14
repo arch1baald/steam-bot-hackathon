@@ -21,7 +21,7 @@ constructor(private http:HttpClient, private popup:MatDialog, private router:Rou
   }
   public sendMessageToSteam(text: string): void
   {
-    this.http.post("https://pivasbot.appspot.com/api/sendToFriends/",{"Message": text, "Id": this.user.getUserId()}).subscribe();
+    this.http.post("https://pivasbot.appspot.com/api/sendToFriends/",{"Message": text, "user": this.user.getUserId()}).subscribe();
       //this.http.post("https://steambot20181013015404.azurewebsites.net/sendall?messageText="+text,null).subscribe();
       this.displayPopup("kkkk");
     
