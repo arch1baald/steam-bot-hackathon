@@ -119,7 +119,7 @@ def get_settings(request):
 def aggregate_messages(messages_queryset):
     agg = dict()
     for msg in messages_queryset:
-        if msg.mailing not in agg:
+        if msg.mailing.id not in agg:
             idx = msg.mailing.id
             agg[idx] = dict()
             agg[idx]['mailing'] = idx
@@ -137,8 +137,10 @@ def aggregate_messages(messages_queryset):
         mailing['clicked'] = int(0.75 * mailing['readed'])
         mailing['uniqueClicked'] = int(0.5 * mailing['readed'])
 
-    if len(mailings) > 5:
-        mailings = mailings[-5:]
+    mailings = sorted(mailings, key=itemgetter('number'), reverse=True)
+    if len(mailings) > 3:
+        # mailings = mailings[-5:]
+        mailings = mailings[:3]
     return mailings
 
 
@@ -172,10 +174,6 @@ def get_dashboard(request):
     current_friends = bot.friends_count
     max_friends = 250
     messages_queryset = Message.objects.filter(bot=bot)
-    # messages = [
-    #     dict(number=m.mailing.id, text=m.text, sent=1233, readed=700, clicked=346, uniqueClicked=234)
-    #     for m in messages_queryset
-    # ]
     mailings = aggregate_messages(messages_queryset)
     result = JsonResponse(dict(
         nameBot=name,
