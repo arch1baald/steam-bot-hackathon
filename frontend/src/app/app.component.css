@@ -2,7 +2,18 @@
 mat-toolbar{
   background-color: #2E2E2E;
 }
-
+.toolbar a{
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  line-height: normal;
+  font-size: 20px;
+  text-align: center;
+  color: #FFFFFF;
+  padding-left: 5%;
+  padding-right: 5%;
+  
+}
 
 .toolbar mat-toolbar{
   display: grid;
