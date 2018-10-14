@@ -100,6 +100,18 @@ def set_bot_response(bot, message):
         bot.update(response=message)
 
 
+def set_bot_name(bot, name):
+    bot = Bot.objects.filter(id=bot.id)
+    if bot:
+        bot.update(name=name)
+
+
+def set_bot_description(bot, description):
+    bot = Bot.objects.filter(id=bot.id)
+    if bot:
+        bot.update(description=description)
+
+
 def update_bot_friends(bot):
     data = get_bot_friend_steam_ids(bot.account, bot.password)
     for steam_id in data:

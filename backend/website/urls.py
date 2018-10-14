@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^getSettings/', get_settings),
     url(r'^getDashboard/', get_dashboard),
     url(r'^acceptFriendRequests/', accept_friend_requests),
+    url(r'^setSettings/', set_bot_settings),
 ]

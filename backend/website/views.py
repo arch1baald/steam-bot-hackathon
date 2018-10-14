@@ -8,10 +8,11 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET
 from django.utils import timezone
 
-# import pandas as pd
-
 from .models import User, Bot, BotFriend, Message, Mailing
-from .utils import send_message_via_steam, update_bot_meta, accept_bot_friend_requests_and_send_welcome
+from .utils import (
+    send_message_via_steam, update_bot_meta, accept_bot_friend_requests_and_send_welcome,
+    set_bot_welcome, set_bot_response, set_bot_name, set_bot_description,
+)
 
 
 def update_headers(result):
@@ -211,6 +212,65 @@ def accept_friend_requests(request):
     for bot in bots:
         accept_bot_friend_requests_and_send_welcome(bot.account, bot.password, bot.welcome)
 
+    result = JsonResponse(dict(status='ok'))
+    update_headers(result)
+    return result
+
+
+@csrf_exempt
+def set_bot_settings(request):
+    """
+    {
+      "user": "Dmitry",
+      "name": "Oleg",
+      "welcome": "Poshel v Jopy",
+      "description": "Daddy BOT",
+      "response": "Ne pishi mne"
+    }
+    :param request:
+    :return:
+    """
+    data = request.body.decode()
+    if not data:
+        result = JsonResponse(dict(status='empty'))
+        update_headers(result)
+        return result
+    data = json.loads(data)
+
+    user_name = data.get('user')
+    if user_name is None:
+        result = JsonResponse(dict(status='error', traceback='user is not defined'))
+        update_headers(result)
+        return result
+
+    bot_welcome = data.get('welcome')
+    bot_description = data.get('description')
+    bot_response = data.get('response')
+    bot_name = data.get('name')
+
+    user = User.objects.filter(name=user_name)
+    if user:
+        user = user[0]
+    else:
+        result = JsonResponse(dict(status='error', traceback='user not found'))
+        update_headers(result)
+        return result
+
+    bots = Bot.objects.filter(owner=user)
+    if not bots:
+        result = JsonResponse(dict(status='error', traceback='user has no bot'))
+        update_headers(result)
+        return result
+
+    for bot in bots:
+        if bot_name:
+            set_bot_name(bot, bot_name)
+        if bot_welcome:
+            set_bot_welcome(bot, bot_welcome)
+        if bot_description:
+            set_bot_description(bot, bot_description)
+        if bot_response:
+            set_bot_response(bot, bot_response)
     result = JsonResponse(dict(status='ok'))
     update_headers(result)
     return result
