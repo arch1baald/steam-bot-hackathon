@@ -59,6 +59,11 @@
 .btn{
     grid-area: btn;
 }
+.btn button{
+    width: 10vw;
+    height: 5vh;
+    grid-area: btn;
+}
 
 mat-form-field{
     /*border:solid 1px;*/

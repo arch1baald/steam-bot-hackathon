@@ -54,19 +54,19 @@
 .text > h1 {
     font-family: "Motiva Sans", Sans-serif; 
     padding: 10px;
-    color:rgb(137, 143, 143);
-    font-size: 30px;
+    color:whitesmoke;
+    font-size: 35px;
 }
 .text > h2 {
     font-family: "Motiva Sans", Sans-serif; 
     padding: 10px;
-    color:rgb(137, 143, 143);
+    color:whitesmoke;
     font-size: 20px;
 }
 
 .text{
     grid-area: text;
-    text-align: center;
+    text-align: left;
 }
 
 .accInfo > button{
@@ -89,4 +89,16 @@
 .page2{
 
     height: 100vh;
+}
+form mat-form-field {
+    color: rgb(70, 67, 67);
+    height: 10vh;
+    width: 15vw;
+}
+
+mat-form-field input{
+    font-size: 28px;
+    height: 5vh;
+    width: 15vw;
+    background-color:whitesmoke;
 }
