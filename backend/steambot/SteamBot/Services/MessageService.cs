@@ -142,7 +142,7 @@ namespace SteamBot.Services
             // initiate the connection
             _steamClient.Connect();
 
-            Thread.Sleep(500);
+            Thread.Sleep(100);
 
             // create our callback handling loop
             int attempts = 5;
