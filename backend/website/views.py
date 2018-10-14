@@ -1,4 +1,7 @@
+import time
 import json
+from random import randint
+from operator import itemgetter
 
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -60,8 +63,9 @@ def send_message_to_all_friends(request):
                 text=message,
                 sent_at=timezone.now(),
             )
-            print(f'SENDING... from={bot}, to={friend}, time={timezone.now()}')
-            send_message_via_steam(bot.account, bot.password, friend.steam_id, message)
+            status_code = send_message_via_steam(bot.account, bot.password, friend.steam_id, message)
+            print(f'SENDING... from={bot}, to={friend}, CODE={status_code}, time={timezone.now()}')
+            time.sleep(0.2)
 
     result = JsonResponse(dict(status='ok'))
     update_headers(result)
@@ -112,9 +116,30 @@ def get_settings(request):
     return result
 
 
-# def aggregate_messages(messages_queryset):
-#     df_messages = pd.DataFrame([msg.to_dict() for msg in messages_queryset])
-#     #TODO: id, sent, text
+def aggregate_messages(messages_queryset):
+    agg = dict()
+    for msg in messages_queryset:
+        if msg.mailing not in agg:
+            idx = msg.mailing.id
+            agg[idx] = dict()
+            agg[idx]['mailing'] = idx
+            agg[idx]['text'] = msg.text
+            agg[idx]['sent'] = 1
+        else:
+            idx = msg.mailing.id
+            agg[idx]['sent'] += 1
+
+    mailings = list(agg.values())
+    mailings = sorted(mailings, key=itemgetter('mailing'))
+    for i, mailing in enumerate(mailings):
+        mailing['number'] = i + 1
+        mailing['readed'] = randint(0, mailing['sent'])
+        mailing['clicked'] = int(0.75 * mailing['readed'])
+        mailing['uniqueClicked'] = int(0.5 * mailing['readed'])
+
+    if len(mailings) > 5:
+        mailings = mailings[-5:]
+    return mailings
 
 
 @require_GET
@@ -147,16 +172,17 @@ def get_dashboard(request):
     current_friends = bot.friends_count
     max_friends = 250
     messages_queryset = Message.objects.filter(bot=bot)
-    messages = [
-        dict(number=m.mailing.id, text=m.text, sent=1233, readed=700, clicked=346, uniqueClicked=234)
-        for m in messages_queryset
-    ]
+    # messages = [
+    #     dict(number=m.mailing.id, text=m.text, sent=1233, readed=700, clicked=346, uniqueClicked=234)
+    #     for m in messages_queryset
+    # ]
+    mailings = aggregate_messages(messages_queryset)
     result = JsonResponse(dict(
         nameBot=name,
         linkBot=link,
         currFriends=current_friends,
         maxFriends=max_friends,
-        steamMessages=messages,
+        steamMessages=mailings,
     ))
     update_headers(result)
     return result
