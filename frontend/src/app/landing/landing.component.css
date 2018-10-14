@@ -4,68 +4,79 @@
 }
 .grid{
     display: grid;
+    height: 100%;
+}
 
-}
-.header{
-    background-image: url("..\images\colored_body_top2.png");
-    height: 15vh;
-    text-align: center;
-}
-.header > h1{
-    margin-top: 10px;
-    font-family: "Motiva Sans", Sans-serif;
-    font-size: 50px;
-    color: #b8b6b4;
-
-}
 .content{
     background-image: url("..\images\Desktop.png");
-    height: 90vh;
+    background-position-y:-20vh;
+    height: 100%;
     display: grid;
     grid-template-columns: 1fr, 1fr;
-    grid-template-areas: "description button"
+    grid-template-areas: "slogan description"
 }
-.footer{
-    background-color: rgb(44, 43, 48);
-    height: 5vh;
+.slogan{
+    grid-area: slogan;
+    margin-left: 15%;
+    margin-top: 2vh;
 }
-.createBot{
-
-
-}
-.description{
-    grid-area: description;
-}
-
-
-.description > h1{
-    color: rgb(137, 143, 143);
-    font-size: 30px;
-    text-align:center;
-}
-.description > p{
+.slogan >h1{
+    font-family: "Motiva Sans", Sans-serif; 
     color:rgb(137, 143, 143);
-    text-align:center;
+    font-size: 40px;
+    
+}
+
+
+.description{
+    
+    grid-area: description;
+    display: grid;
+    
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+     "text"
+     "btn";
+}
+
+
+.text > h1 {
+    font-family: "Motiva Sans", Sans-serif; 
+    padding: 10px;
+    color:rgb(137, 143, 143);
+    font-size: 30px;
+}
+.text > h2 {
+    font-family: "Motiva Sans", Sans-serif; 
+    padding: 10px;
+    color:rgb(137, 143, 143);
+    font-size: 20px;
+}
+
+.text{
+    margin-top:10%;
+    margin-left: 40%;
+    align-self: center;
+    text-align: center;
+    grid-area: text;
 }
 
 .btn{
-    grid-area: button;
+    margin-bottom: 35%;
+    margin-left: 55%;
+    align-self: center;
+    
+    grid-area: btn;
+ 
 
-}
+} 
 .btn > button{
-    margin-top: 40vh;
-    margin-left: 73vw;
-    height: 15vh;
-    width: 20vw;
+    height: 10vh;
+    width: 15vw;
     background-color: rgb(11, 114, 11);
     border: none;
+}
 
-    
-}
-.btn > button > h1{
-    font-family: "Motiva Sans", Sans-serif; 
-    color:rgb(137, 143, 143);
-}
 
 
 .page1{

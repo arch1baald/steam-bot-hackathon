@@ -12,10 +12,10 @@
     ". content ."
 }
 
-.content{
+.content {
     grid-area: content;
-    background-color: rgba(110, 104, 104, 0.438);
     display: grid;
+    background-color:whitesmoke;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
     grid-template-areas: 
@@ -61,7 +61,7 @@
 }
 
 mat-form-field{
-    background-color: rgb(250, 250, 250);
+    /*border:solid 1px;*/
     width:100%;
 }
 

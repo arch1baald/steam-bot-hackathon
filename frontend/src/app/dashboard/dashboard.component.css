@@ -11,3 +11,27 @@
   background-image: url('https://cdn6.aptoide.com/imgs/2/b/7/2b7f9860f0980ff2fdcd28aae13a5c7f_icon.png');
   background-size: cover;
 }
+
+.grid{
+  background-image: url("..\images\settingBg.png");
+  background-size: cover;
+  background-position-y: -25vh;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 50% 1fr;
+  grid-template-areas:
+  ". content ."
+}
+
+.content {
+  perspective: 1px;
+  height: 100%;
+  grid-area: content;
+  overflow: hidden;
+}
+.contentScroll{
+  height: 100%;
+  margin-right: -50px; 
+  padding-right: 50px; 
+  overflow-y: scroll;
+}

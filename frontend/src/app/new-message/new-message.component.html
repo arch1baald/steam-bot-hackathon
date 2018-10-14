@@ -2,6 +2,7 @@
   <mat-form-field class="example-full-width">
     <input #MessageForm matInput placeholder="Text message here" value="Sushi">
   </mat-form-field>
+  <button type="button" mat-raised-button color="primary" (click)="sendMessageToSteam(MessageForm.value)">Warn</button>
 </form>
-<button type="button" mat-raised-button color="warn" (click)="sendMessageToSteam(MessageForm.value)">Warn</button>
+
 
