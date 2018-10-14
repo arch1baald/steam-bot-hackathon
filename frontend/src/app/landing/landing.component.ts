@@ -25,6 +25,7 @@ export class LandingComponent implements OnInit {
       this.user.setUserId(text);
       //$route.reload();
     this.router.navigate(["/dashboard"]);
+     window.location.reload();
     //this.location.reload();
      
   } 

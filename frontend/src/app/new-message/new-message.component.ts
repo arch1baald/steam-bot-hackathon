@@ -31,6 +31,7 @@ constructor(private http:HttpClient, private popup:MatDialog, private router:Rou
   {
     this.popup.open(ModalViewComponent).afterClosed().subscribe(result => {
       this.router.navigate(["/dashboard"]);
+      window.location.reload();
     });;
   }
 }

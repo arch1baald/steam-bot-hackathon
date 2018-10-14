@@ -4,6 +4,11 @@ import { Observable } from 'rxjs';
 
 import { UserService } from '../user.service';
 
+import {ModalViewComponent} from '../modal-view/modal-view.component';
+import {Router} from '@angular/router';
+
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+
 @Component({
   selector: 'app-settings-page',
   templateUrl: './settings-page.component.html',
@@ -11,7 +16,7 @@ import { UserService } from '../user.service';
 })
 export class SettingsPageComponent implements OnInit {
 
-  constructor(private http:HttpClient,private user:UserService) { }
+  constructor(private http:HttpClient,private popup:MatDialog, private router:Router,private user:UserService) { }
 
   ngOnInit() {
     this.http.get("https://pivasbot.appspot.com/api/getSettings/?user="+this.user.getUserId()).subscribe((data: any) => {
@@ -35,8 +40,15 @@ export class SettingsPageComponent implements OnInit {
   {
       //this.http.post("https://steambot20181013015404.azurewebsites.net/sendall?messageText="+text,null).subscribe();
     
-     //this.http.post("https://pivasbot.appspot.com/api/sendToFriends/",{"Message": text, "Id": 1}).subscribe();
+     this.http.post("https://pivasbot.appspot.com/api/setSettings/",{"user": this.user.getUserId(),"name": botName, "discription": botDiscription, "welcome": botWelcome, "respond": botRespond}).subscribe();
+     this.displayPopup("Settings changed");
   } 
-  
+  public displayPopup(text:string):void
+  {
+    this.popup.open(ModalViewComponent).afterClosed().subscribe(result => {
+      this.router.navigate(["/dashboard"]);
+      //window.location.reload();
+    });;
+  }
 
 }
